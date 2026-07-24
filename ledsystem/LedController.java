@@ -29,9 +29,6 @@ public class LedController {
         Animation current = this.animations.get(currentAnimationIndex);
         current.apply(strip);
 
-        if (current instanceof Timed && ((Timed) current).isTimeUp()) {
-            this.currentAnimationIndex = (this.currentAnimationIndex + 1) % this.animations.size();
-        }
     }
 
     public LedStrip getStrip() {

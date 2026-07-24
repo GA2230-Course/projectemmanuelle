@@ -1,51 +1,50 @@
 package ledsystem;
+
 import ledsystem.ledssim.LedStrip;
 import ledsystem.utils.StopWatch;
 import java.util.Objects;
-public class SequentialAnimationGroup implements Animation, Timed {
+
+public class SequentialAnimationGroup implements Animation {
     private final Animation[] animations;
-    private final StopWatch currentTimer;
+    private final double durationPerAnimation;
+    private final StopWatch stepTimer;
     private int currentIndex;
-    public SequentialAnimationGroup(Animation... animations) {
-        Objects.requireNonNull(animations, "Animations array cant be null");
+    private boolean isStarted;
+    // DOWN HERE YOU HAVE ALL THE ILLEGALARGUMENTSEXCEPTIONS THAT TELL WHAT YOU DONT WANT TO HAPPEND,
+    // ALSO IT SHOWS WHAT THE MAINPROECT SHOULD RUN
+    public SequentialAnimationGroup(double durationPerAnimation, Animation... animations) {
+        Objects.requireNonNull(animations, "Animations array cannot be null");
         if (animations.length == 0) {
-            throw new IllegalArgumentException("needs to put at lease one animation");
+            throw new IllegalArgumentException("Must provide at least one animation");
+        }
+        if (durationPerAnimation <= 0.0) {
+            throw new IllegalArgumentException("Duration per step must be greater than zero");
         }
         for (Animation anim : animations) {
-            Objects.requireNonNull(anim, "Animation objects cant be null");
+            Objects.requireNonNull(anim, "Animation elements cannot be null");
         }
         this.animations = animations;
+        this.durationPerAnimation = durationPerAnimation;
         this.currentIndex = 0;
-        this.currentTimer = new StopWatch();
-        this.currentTimer.start();
+        this.stepTimer = new StopWatch();
+        this.isStarted = false;
     }
+    // WE WANT TO CHECK HERE THAT THE STRIPS ARENT 0
     @Override
     public void apply(LedStrip strip) {
-        Objects.requireNonNull(strip, "LED strip cant be null");
-        if (isTimeUp()) {
+        Objects.requireNonNull(strip, "LED strip cannot be null");
+        if (currentIndex >= animations.length) {
             return;
         }
-        Animation current = animations[currentIndex];
-        current.apply(strip);
-        boolean shouldAdvance = false;
-        if (current instanceof Timed) {
-            if (((Timed) current).isTimeUp()) {
-                shouldAdvance = true;
-            }
-        } else {
-            if (this.currentTimer.get() >= 5.0) {
-                shouldAdvance = true;
-            }
+        if (!isStarted) {
+            stepTimer.start();
+            isStarted = true;
         }
-
-        if (shouldAdvance) {
+        // THIS BASICALLY GOES TO THE NEXT "i" IN THE ANIMATION ARRAY
+        animations[currentIndex].apply(strip);
+        if (stepTimer.get() >= durationPerAnimation) {
             currentIndex++;
-            this.currentTimer.start();
+            stepTimer.start();
         }
-    }
-
-    @Override
-    public boolean isTimeUp() {
-        return currentIndex >= animations.length;
     }
 }

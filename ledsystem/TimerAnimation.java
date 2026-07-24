@@ -4,11 +4,13 @@ import ledsystem.ledssim.LedStrip;
 import ledsystem.utils.StopWatch;
 import java.util.Objects;
 
-public class TimerAnimation implements Animation, Timed {
+public class TimerAnimation implements Animation{
     private final Animation wrappedAnimation;
     private final double durationSeconds;
     private final StopWatch timer;
-
+    private boolean isstarted;
+// HERE ARE THE ARGUMENTS YOU DONT WANT THEM TO HAPPEN LIKE THE DURATION MUST BE ABOVE 0
+// AND THAT THE LEDSTRIPS CANT BE 0
     public TimerAnimation(Animation wrappedAnimation, double durationSeconds) {
         this.wrappedAnimation = Objects.requireNonNull(wrappedAnimation, "Wrapped animation cannot be null");
         if (durationSeconds <= 0.0) {
@@ -16,17 +18,19 @@ public class TimerAnimation implements Animation, Timed {
         }
         this.durationSeconds = durationSeconds;
         this.timer = new StopWatch();
-        this.timer.start();
+        this.isstarted=false;
     }
 
     @Override
     public void apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cannot be null");
-        wrappedAnimation.apply(strip);
-    }
+        if(!isstarted) {
+            timer.start();
+            isstarted = true;
+        }
+        if (timer.get() < durationSeconds) {
+            wrappedAnimation.apply(strip);
+        }
 
-    @Override
-    public boolean isTimeUp() {
-        return this.timer.get() >= this.durationSeconds;
     }
 }

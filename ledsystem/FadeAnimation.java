@@ -11,7 +11,7 @@ public class FadeAnimation implements Animation {
     private final Color endColor;
     private final StopWatch progressTimer;
     private boolean goingForward;
-
+//CONTINUING TO HERE WILL THE ARGUMENTS AND WHAT THE FADEANIMATION WANTS TO SHOW WHILE THE ANIMATIONS ARE RUNNING
     public FadeAnimation(Color startColor, Color endColor) {
         this.startColor = Objects.requireNonNull(startColor, "Start color cantt be null");
         this.endColor = Objects.requireNonNull(endColor, "End color cant be null");
@@ -19,7 +19,7 @@ public class FadeAnimation implements Animation {
         this.progressTimer = new StopWatch();
         this.progressTimer.start();
     }
-
+//CHANGES EVERY TWO SECONDS THE COLOR OF THE STRIP WHILE IT HAS A SPECIFIC DURATION TIME
     @Override
     public void apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cant be null");
