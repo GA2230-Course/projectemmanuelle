@@ -10,7 +10,7 @@ public class BlinkAnimation implements Animation {
     private final Color secondColor;
     private final StopWatch blinkTimer;
     private boolean useFirstColor;
-
+    //Alternates the entire LED strip between two colors
     public BlinkAnimation(Color firstColor, Color secondColor) {
         this.firstColor = Objects.requireNonNull(firstColor, "Primary blink color cannot be null");
         this.secondColor = Objects.requireNonNull(secondColor, "Secondary blink color cannot be null");
