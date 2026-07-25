@@ -10,10 +10,11 @@ public class SolidAnimation implements Animation {
     public SolidAnimation(Color color) {
         this.color = Objects.requireNonNull(color, "Solid color cant be null");
     }
-
+// THE RETURN FALSE TREATS THE ANIMATION AS A "THE SOLID ANIMATION STILL NOT FINISHED RUNNING"
     @Override
-    public void apply(LedStrip strip) {
+    public boolean apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cant be null");
         strip.setAll(this.color);
+        return false;
     }
 }

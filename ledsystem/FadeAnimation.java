@@ -21,7 +21,7 @@ public class FadeAnimation implements Animation {
     }
 //CHANGES EVERY TWO SECONDS THE COLOR OF THE STRIP WHILE IT HAS A SPECIFIC DURATION TIME
     @Override
-    public void apply(LedStrip strip) {
+    public boolean apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cant be null");
         if (progressTimer.get() >= 2.0) {
             goingForward = !goingForward;
@@ -36,5 +36,6 @@ public class FadeAnimation implements Animation {
 
         Color blendedColor = ColorUtils.lerp(startColor, endColor, t);
         strip.setAll(blendedColor);
+        return false;
     }
 }

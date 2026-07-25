@@ -20,12 +20,13 @@ public class BlinkAnimation implements Animation {
     }
 //CHANGES THE COLOR OF THE STRIP EVERY TWO SECONDS WHILE BEING ON A SPECIFIC DURATION TIME
     @Override
-    public void apply(LedStrip strip) {
+    public boolean apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cannot be null");
-        if (blinkTimer.get() >= 0.2) {
+        if (blinkTimer.get() >= 2.0) {
             useFirstColor = !useFirstColor;
             blinkTimer.start();
         }
         strip.setAll(useFirstColor ? firstColor : secondColor);
+        return false;
     }
 }

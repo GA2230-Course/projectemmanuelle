@@ -20,17 +20,21 @@ public class TimerAnimation implements Animation{
         this.timer = new StopWatch();
         this.isstarted=false;
     }
-
+//SAME THING HERE IF THE DURATION TIME HAS FINISHED IT RETURNS TRUE AND YOU KEEP GOING
+//ELSE RETURN FALSE THE ANIMATION KEEPS GOING
     @Override
-    public void apply(LedStrip strip) {
+    public boolean apply(LedStrip strip) {
         Objects.requireNonNull(strip, "LED strip cannot be null");
         if(!isstarted) {
             timer.start();
             isstarted = true;
         }
-        if (timer.get() < durationSeconds) {
-            wrappedAnimation.apply(strip);
+        if (timer.get()>=durationSeconds){
+            return true;
         }
+        wrappedAnimation.apply(strip);
+        return false;
+
 
     }
 }

@@ -22,12 +22,15 @@ public class LedController {
     }
 
     public void tickNextFrame() {
-        if (this.animations.isEmpty()) {
+        if (this.animations.isEmpty() || currentAnimationIndex>= this.animations.size()) {
             return;
         }
 
         Animation current = this.animations.get(currentAnimationIndex);
-        current.apply(strip);
+        boolean finished = current.apply(strip);
+        if (finished){
+            currentAnimationIndex++;
+        }
 
     }
 

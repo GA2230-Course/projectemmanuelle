@@ -12,10 +12,10 @@ public class MainProjectCode {
         LedController controller = new LedController(strip);
 
         Animation redSolid = new TimerAnimation(new SolidAnimation(Color.RED),3.0);
-        Animation Blinkanimation= new TimerAnimation(new BlinkAnimation(Color.BLUE, Color.CYAN), 6.0);
-        Animation Fadeanimationcode = new TimerAnimation(new FadeAnimation(Color.GRAY, Color.GREEN), 8.0);
-//THE DURATION PER SECOND TELLS EACH ANIMATION THE EXACT SAME TIME IT SHOULD CHANGE IT 6 SECONDS
-        Animation masterSequence = new SequentialAnimationGroup(6.0,redSolid,Blinkanimation,Fadeanimationcode);
+        Animation Blinkanimation= new TimerAnimation(new BlinkAnimation(Color.BLUE, Color.CYAN), 8.0);
+        Animation Fadeanimationcode = new TimerAnimation(new FadeAnimation(Color.GRAY, Color.GREEN), 10.0);
+//CHECKS EACH ANIMATION EVERY TIME THEIR DURATION SECONDS HAS FINISHED
+        Animation masterSequence = new SequentialAnimationGroup(redSolid,Blinkanimation,Fadeanimationcode);
 
 
         controller.addAnimation(masterSequence);
