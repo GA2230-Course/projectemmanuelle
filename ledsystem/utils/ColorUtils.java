@@ -31,7 +31,7 @@ public class ColorUtils {
     /**
      * Linearly interpolates between two colors.
      * This is useful for creating gradients or smooth transitions between colors.
-     * The interpolation factor `t` should be between 0.0 and 1.0, 
+     * The interpolation factor `t` should be between 0.0 and 1.0,
      * where 0.0 corresponds to the first color and 1.0 corresponds to the second color.
      *
      * @param c1 The first color.
